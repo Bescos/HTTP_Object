@@ -1,3 +1,5 @@
+require 'socket'
+
 class HTTP
 
  class Request
@@ -9,6 +11,17 @@ class HTTP
 
   def valid?
    not @socket.nil?
+  end
+
+  def lireStatus
+   @socket.gets
+  end
+
+  def lireHeaders
+    headers = {}
+    splitted=@socket.gets.split(': ')
+    headers[splitted[0]]=splitted[1]
+    headers
   end
 
  end
