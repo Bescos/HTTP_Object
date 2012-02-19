@@ -24,11 +24,9 @@ context "creation of the Request Object" do
  it "should read the headers of the request" do
     socket = double (Socket)
     req = HTTP::Request.new(socket) 
-    #Y-a-t'il une méthode pour rendre le stub dynamique ?
-    #Afin que je puisse simuler le comportement d'un socket avec plusieurs lignes 
-    socket.stub(:gets){"Content-Length: 230"}
+    socket.stub(:gets).and_return("Host: localhost:8080", "User-Agent: Mozilla", "Accept: text.html", "\r\n")
     headers = req.lireHeaders
-    headers["Content-Length"].should == "230"
+    headers["User-Agent"].should == "Mozilla"
  end
  
 end
