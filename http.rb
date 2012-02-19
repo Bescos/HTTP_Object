@@ -4,6 +4,9 @@ class HTTP
 
  class Request
   #But de la classe : reconstituer status, headers, body
+  attr_reader :headers
+  attr_reader :body
+
 
   def initialize(sock)
     @socket=sock
@@ -18,17 +21,17 @@ class HTTP
   end
 
   def lireHeaders
-    headers = {}
+    @headers = {}
     line = @socket.gets
     #boucle de lecture jusqu'à la ligne vide
     while line!="\r\n" do
      #analyse des en-tete avec split. Renvoie tableau à deux éléments.
      splitted=line.split(': ')
      @body_length=splitted[1] if splitted[0] == "Content-Length"
-     headers[splitted[0]]=splitted[1]
+     @headers[splitted[0]]=splitted[1]
      line = @socket.gets
     end
-    headers
+    @headers
   end
 
   def lireBody
@@ -37,8 +40,8 @@ class HTTP
 end
 
  class Response
-#Constituer status, headers, body
-
+  #Constituer status, headers, body
+  
 
 
 

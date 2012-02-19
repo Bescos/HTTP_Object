@@ -27,7 +27,7 @@ context "creation of the Request Object" do
     req = HTTP::Request.new(socket)  
     socket.stub(:gets).and_return("Host: localhost:8080", "User-Agent: Mozilla", "Accept: text.html", "\r\n")
     headers = req.lireHeaders
-    headers["User-Agent"].should == "Mozilla"
+    req.headers["User-Agent"].should == "Mozilla"
     headers.length.should == 3
  end
  
@@ -46,7 +46,7 @@ end
 
 describe HTTP::Response do
 
-it "should 
+
 
 
 
