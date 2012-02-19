@@ -44,9 +44,23 @@ end
 
  class Response
   #Constituer status, headers, body
-  
+  attr_accessor :code
+  attr_accessor :http_version
+  attr_accessor :code_message
+  attr_accessor :headers
+  attr_accessor :body
 
+  def initialize
+   headers = {}
+  end
 
+  def to_s
+    status = [@code, @http_version, @code_message].join(',')
+    headers = headers.to_s
+    blank = "\r\n"
+    [status, headers, blank, body].join("\n")
+  end
+ 
 
  end
  
