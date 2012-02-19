@@ -4,12 +4,16 @@ class HTTP
 
  class Request
   #But de la classe : reconstituer status, headers, body
+  attr_reader :status
   attr_reader :headers
   attr_reader :body
 
 
   def initialize(sock)
     @socket=sock
+    lireStatus
+    lireHeaders
+    lireBody if @body_length
   end
 
   def valid?
@@ -17,7 +21,7 @@ class HTTP
   end
 
   def lireStatus
-   @socket.gets
+   @status = @socket.gets
   end
 
   def lireHeaders
@@ -31,11 +35,10 @@ class HTTP
      @headers[splitted[0]]=splitted[1]
      line = @socket.gets
     end
-    @headers
   end
 
   def lireBody
-    @socket.read(Integer(@body_length))
+   @body = @socket.read(Integer(@body_length))
   end
 end
 
