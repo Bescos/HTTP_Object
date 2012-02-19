@@ -51,14 +51,14 @@ end
   attr_accessor :body
 
   def initialize
-   headers = {}
+   @headers = {}
   end
 
   def to_s
-    status = [@code, @http_version, @code_message].join(',')
-    headers = headers.to_s
+    status = [@code, @http_version, @code_message].join(' ')
+    header = @headers.to_s
     blank = "\r\n"
-    [status, headers, blank, body].join("\n")
+    [status, header, blank, @body].join("\n")
   end
  
 

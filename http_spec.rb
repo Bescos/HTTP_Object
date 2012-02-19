@@ -31,10 +31,11 @@ context "creation of the Response Object" do
  it "should write the string of a response"
    res = HTTP::Response.new
    res.code = "200"
+   res.http_version = "HTTP/1.1"
    res.code_message = "ok"
-   res.headers["Content-Length"]= "26"
-   res.headers["Content-Type"]= "text/plain"
-   res.body = "Ici le corps de ma requete"
+   res.headers["Content-Length"] = "26"
+   res.headers["Content-Type"] = "text/plain"
+   res.body = "Ici le corps de ma reponse"
 
    puts res.to_s
 
