@@ -7,7 +7,7 @@ class HTTP
   attr_reader :status
   attr_reader :headers
   attr_reader :body
-
+  attr_reader :path
 
   def initialize(sock)
     @socket=sock

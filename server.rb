@@ -1,3 +1,5 @@
+$: << File.dirname(__FILE__)
+
 require 'socket'
 require 'http.rb'
 
@@ -31,6 +33,7 @@ process_number.times do
       req = HTTP::Request.new(socket)
       res = HTTP::Response.new
 
+      #gestion des cookies
       if cookie = req.headers["Cookie"] and session_id = cookie.split('=')[1] and sessions[session_id]
         sessions[session_id] << "request No#{request_number} #{req.path}"
         res.write sessions[session_id].join("\n")
