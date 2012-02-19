@@ -36,8 +36,7 @@ context "creation of the Response Object" do
    res.headers["Content-Length"] = "26"
    res.headers["Content-Type"] = "text/plain"
    res.body = "Ici le corps de ma reponse"
-
-   puts res.to_s
+   res.to_s.should == "200 HTTP/1.1 ok\n{\"Content-Length\"=>\"26\", \"Content-Type\"=>\"text/plain\"}\n\r\nIci le corps de ma reponse"
 
 end
 end

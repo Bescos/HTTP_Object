@@ -57,7 +57,7 @@ end
   def to_s
     status = [@code, @http_version, @code_message].join(' ')
     header = @headers.to_s
-    blank = "\r\n"
+    blank = "\r"
     [status, header, blank, @body].join("\n")
   end
  
