@@ -24,12 +24,16 @@ class HTTP
     while line!="\r\n" do
      #analyse des en-tete avec split. Renvoie tableau à deux éléments.
      splitted=line.split(': ')
+     @body_length=splitted[1] if splitted[0] == "Content-Length"
      headers[splitted[0]]=splitted[1]
      line = @socket.gets
     end
     headers
   end
 
+  def lireBody
+    @socket.read(Integer(@body_length))
+  end
 end
 
  class Response
