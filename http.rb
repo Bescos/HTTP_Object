@@ -4,7 +4,9 @@ class HTTP
 
  class Request
   #But de la classe : reconstituer status, headers, body
-  attr_reader :status
+  attr_reader :cmd
+  attr_reader :path
+  attr_reader :http_version
   attr_reader :headers
   attr_reader :body
   attr_reader :path
@@ -21,7 +23,10 @@ class HTTP
   end
 
   def lireStatus
-   @status = @socket.gets
+   status = @socket.gets.split(' ')
+   @cmd = status[0]
+   @path = status[1]
+   @http_version = status[2]
   end
 
   def lireHeaders

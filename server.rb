@@ -33,18 +33,28 @@ process_number.times do
       req = HTTP::Request.new(socket)
       res = HTTP::Response.new
 
-      #gestion des cookies
-      if cookie = req.headers["Cookie"] and session_id = cookie.split('=')[1] and sessions[session_id]
-        sessions[session_id] << "request No#{request_number} #{req.path}"
-        res.write sessions[session_id].join("\n")
+      #Check if cookie exists
+      if sessions.keys.include?(req.headers["Cookie"])
+        puts("Il y a deja un cookie")
+        userCookie = req.headers["Cookie"]
+        #incrémentation du nombre de visites du client
+        sessions[userCookie]["nb_visits"]=sessions[userCookie]["nb_visits"]+1
+        puts("Nombre de visites : #{sessions[userCookie]["nb_visits"]}")
+
       else
-        res.headers["Set-Cookie"] = "session_id=#{session_id = generate_cookie}"
-        sessions[session_id] = ["request No#{request_number} #{req.path}"]
+        puts("pas de cookie")
+        userCookie = generate_cookie()
+        sessions[userCookie]= {}
+        sessions[userCookie]["nb_visits"]=1
       end
       
       # response
       res.code = "200"
       res.code_message = "ok"
+      res.headers["Set-Cookie"] =  userCookie
+      response_body = [req.status, req.headers.inspect, req.body].join("\n")
+      res.body = response_body 
+      res.headers["Content-Length"] = res.body.length
       socket.write res.to_s
       
       socket.close
